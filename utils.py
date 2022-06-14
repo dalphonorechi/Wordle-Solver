@@ -1,4 +1,4 @@
-wordle = [
+guessed_not = [
     "TRAIT",
     "FLOOD",
     "GLOOM",
@@ -7,7 +7,6 @@ wordle = [
     "PEACH",
     "SHOWY",
     "CREAK",
-    "May",
     "MANOR",
     "ATOLL",
     "BAYOU",
@@ -39,7 +38,6 @@ wordle = [
     "HAIRY",
     "STORY",
     "FORGO",
-    "April",
     "LARVA",
     "TRASH",
     "ZESTY",
@@ -101,7 +99,6 @@ wordle = [
     "MOURN",
     "NASTY",
     "RUPEE",
-    "February",
     "CHOKE",
     "CHANT",
     "SPILL",
@@ -130,7 +127,6 @@ wordle = [
     "SHARD",
     "MOIST",
     "THOSE",
-    "January",
     "LIGHT",
     "WRUNG",
     "COULD",
