@@ -2,10 +2,13 @@ import time
 import api, utils
 from automate import Wordle
 from track import Track
+from api import Api
 
 wordle = Wordle()
 
 track = Track()
+
+api = Api()
 
 wordle.open_wordle()
 
@@ -13,28 +16,13 @@ wordle.get_game_elements()
 
 wordle.close_dialog()
 
-while track.tries < 6 or track.evaluations.count("correct") != 5:
+while track.tries < 6 or not track.all_evaluations_correct():
 
     wordle.type_word(word=track.guessed)
 
-    print(track.guessed)
-
     wordle.press_enter()
-    time.sleep(5)
 
-    isThere = wordle.check_word_in_list()
-
-    if isThere == True:
-        for i in range(0, 5):
-            time.sleep(2)
-            wordle.press_delete()
-
-        utils.guessed_not.append(track.guessed.upper())
-
-        track.guessed = api.get_word(
-            api.get_patterns(track)[1], api.get_patterns(track)[0]
-        )
-
+    if wordle.check_word_in_list_and_delete(track):
         continue
 
     track.reset_letters()
@@ -44,6 +32,10 @@ while track.tries < 6 or track.evaluations.count("correct") != 5:
     track.sort_evaluations()
 
     track.build_correct_string()
+
+    if track.all_evaluations_correct():
+        print("exiting")
+        break
 
     temp_c = api.get_words(track)
 

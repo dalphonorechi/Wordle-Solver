@@ -1,9 +1,8 @@
-import imp
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import time
+import time, utils
 
 
 class Wordle:
@@ -11,6 +10,7 @@ class Wordle:
     Deals with the UI. Opening the website and automating through the HTML.
     It uses selenium package for automation.
     """
+
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option("detach", True)
@@ -54,6 +54,8 @@ class Wordle:
             toast = game_toast.find_element(By.XPATH, ".//game-toast").get_attribute(
                 "text"
             )
+            print(toast)
+
             if toast == "Not in word list":
                 return True
             else:
@@ -95,3 +97,16 @@ class Wordle:
             ).get_attribute("letter")
             track.evaluations.append(eval)
             track.letters.append(letter)
+
+    def check_word_in_list_and_delete(self, track):
+        if self.check_word_in_list():
+            for i in range(0, 5):
+                time.sleep(2)
+                self.press_delete()
+
+            utils.guessed_not.append(track.guessed.upper())
+
+            track.guessed = "shore"
+            return True
+        else:
+            return False

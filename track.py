@@ -1,5 +1,5 @@
-from cgitb import reset
-import api, utils
+import utils
+from api import Api
 
 
 class Track:
@@ -8,6 +8,7 @@ class Track:
     """
 
     def __init__(self):
+        self.api = Api()
         self.tries = 0
         self.evaluations = []
         self.present = []
@@ -16,7 +17,10 @@ class Track:
         self.indices = []
         self.correct_list = []
         self.letters = []
-        self.guessed = api.get_word()
+        self.guessed = self.api.get_word()
+
+    def all_evaluations_correct(self):
+        return self.evaluations.count("correct") == 5
 
     def sort_evaluations(self):
         for i in range(len(self.evaluations)):
@@ -50,10 +54,10 @@ class Track:
             self.guessed = self.pick_word(temp_c, g=utils.guessed_not)
         except:
 
-            self.guessed = api.get_word(
+            self.guessed = self.api.get_word(
                 correct=self.correct,
-                pattern=api.get_patterns(self)[1],
-                pattern_not=api.get_patterns(self)[0],
+                pattern=self.api.get_patterns(self)[1],
+                pattern_not=self.api.get_patterns(self)[0],
             )
 
     def pick_word(self, list_choice, g):
