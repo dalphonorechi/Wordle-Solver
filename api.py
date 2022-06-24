@@ -6,16 +6,27 @@ import utils
 
 class Api:
     def get_word(self, correct="?????", pattern_not="", pattern=""):
+        def getw():
+            response = requests.get(
+                f"https://api.datamuse.com/words?sp={correct}{pattern_not}{pattern}"
+            )
 
-        response = requests.get(
-            f"https://api.datamuse.com/words?sp={correct}{pattern_not}{pattern}"
-        )
-        words = []
+            words = []
 
-        for i in loads(response.text):
-            words.append(i["word"])
-        t = 0
+            for i in loads(response.text):
+                words.append(i["word"])
+            t = 0
+            return words
+
+        words =  getw()
+        
+        print(pattern,pattern_not,correct)
+
+        while len(words) == 0:
+            words = getw()
+
         g = rn.choice(words)
+
         while utils.guessed_not.count(g) > 0:
             g = rn.choice(words)
             t += 1
@@ -63,7 +74,7 @@ class Api:
         Returns wordlist based on the correct,absent and present positions.
         It makes an api call to [datamuse.com] using wild cards.
         """
-        print(track.correct)
+        # print(track.correct)
 
         pattern = self.get_patterns(track)[0]
 

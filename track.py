@@ -24,16 +24,21 @@ class Track:
 
     def sort_evaluations(self):
         for i in range(len(self.evaluations)):
-            if self.evaluations[i] == "correct":
+            if (
+                self.evaluations[i] == "correct"
+                and self.correct_list.count(self.letters[i]) == 0
+            ):
                 self.indices.append(i)
                 self.correct_list.append(self.letters[i])
-            elif self.evaluations[i] == "present":
-                if self.present.count(self.letters[i]) == 0:
-                    self.present.append(self.letters[i])
+            elif (
+                self.evaluations[i] == "present"
+                and self.present.count(self.letters[i]) == 0
+            ):
+                self.present.append(self.letters[i])
             else:
                 if (
                     self.correct_list.count(self.letters[i]) == 0
-                    or self.present.count(self.letters[i]) == 0
+                    and self.present.count(self.letters[i]) == 0
                 ):
                     self.absent.append(self.letters[i])
 
@@ -67,6 +72,9 @@ class Track:
             guess = list_choice[t]
             t += 1
         return guess
+
+    def end_of_tries(self):
+        return self.tries < 6
 
     def reset_letters(self):
         self.letters = []

@@ -1,6 +1,6 @@
 import time
-import api, utils
-from automate import Wordle
+import api
+from automate2 import Wordle
 from track import Track
 from api import Api
 
@@ -16,7 +16,7 @@ wordle.get_game_elements()
 
 wordle.close_dialog()
 
-while track.tries < 6 or not track.all_evaluations_correct():
+while track.end_of_tries() or not track.all_evaluations_correct():
 
     wordle.type_word(word=track.guessed)
 
@@ -44,5 +44,15 @@ while track.tries < 6 or not track.all_evaluations_correct():
     track.reset_evaluation()
 
     track.update_tries()
+    
+    print("Printing correct list")
+    print(track.correct)
+    print(track.correct_list)
+    print(track.present)
+    print(track.absent)
+
+if not track.all_evaluations_correct():
+    wordle.close_wordle()
+    
 
 time.sleep(25)

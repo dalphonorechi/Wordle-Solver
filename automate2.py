@@ -23,14 +23,13 @@ class Wordle:
         self.driver.get("https://www.nytimes.com/games/wordle/index.html")
 
     def get_game_elements(self):
-        time.sleep(15)
         self.inner_components = self.driver.execute_script(
-            """return document.querySelector('game-app').shadowRoot.querySelector('game-theme-manager').querySelector('game-keyboard').shadowRoot.querySelector('#keyboard')"""
+            """return document.querySelector('#wordle-app-game').querySelector('.Keyboard-module_keyboard__1HSnn')"""
         )
 
     def close_dialog(self):
         close_dialog = self.driver.execute_script(
-            """return document.querySelector('game-app').shadowRoot.querySelector('game-theme-manager').querySelector('game-modal').shadowRoot.querySelector('.overlay').querySelector('.content').querySelector('.close-icon')"""
+            """return document.querySelector('#wordle-app-game').querySelector('.Modal-module_modalOverlay__81ZCi').querySelector('.Modal-module_content__s8qUZ').querySelector('.Modal-module_closeIcon__b4z74')"""
         )
         close_dialog.click()
 
@@ -50,11 +49,14 @@ class Wordle:
         """Checks if selected word is not in the wordle 'list' and deletes it."""
         try:
             game_toast = self.driver.execute_script(
-                """return document.querySelector('game-app').shadowRoot.querySelector('game-theme-manager').querySelector('#game').querySelector('#game-toaster')"""
+                """return document.querySelector('#wordle-app-game').querySelector('.ToastContainer-module_toaster__QDad3')"""
             )
-            toast = game_toast.find_element(By.XPATH, ".//game-toast").get_attribute(
-                "text"
+            print(game_toast.get_attribute("innerHTML"))
+
+            toast = game_toast.find_element(By.XPATH, ".//div").get_attribute(
+                "innerHTML"
             )
+
             print(toast)
 
             if toast == "Not in word list":
@@ -72,42 +74,43 @@ class Wordle:
             time.sleep(2)
             inner.click()
 
-    def expand_shadow_element(self, element):
-        shadow_root = self.driver.execute_script(
-            'return arguments[0].shadowRoot.querySelector("div")', element
-        )
-        return shadow_root
+    # def expand_shadow_element(self, element):
+    #     shadow_root = self.driver.execute_script(
+    #         'return arguments[0].shadowRoot.querySelector("div")', element
+    #     )
+    #     return shadow_root
 
     def check_evaluation(self, track):
         """
         Checks the position of letters if they are correct,present,or absent in the word.
         """
         game_board = self.driver.execute_script(
-            """return document.querySelector('game-app').shadowRoot.querySelector('game-theme-manager').querySelector('#board-container').querySelector('#board').querySelectorAll('game-row')"""
+            """return document.querySelector('#wordle-app-game').querySelector('.Board-module_boardContainer__cKb-C').querySelector('.Board-module_board__lbzlf').querySelectorAll('.Row-module_row__dEHfN')"""
         )
+        time.sleep(2)
+
         for i in range(0, 5):
-            eval = (
-                self.expand_shadow_element(game_board[track.tries]).find_elements(
-                    By.XPATH, ".//game-tile"
-                )[i]
-            ).get_attribute("evaluation")
-            letter = (
-                self.expand_shadow_element(game_board[track.tries]).find_elements(
-                    By.XPATH, ".//game-tile"
-                )[i]
-            ).get_attribute("letter")
+            eval = game_board[track.tries].find_elements(By.XPATH, ".//div//div")[i].get_attribute("data-state")
+            letter = game_board[track.tries].find_elements(By.XPATH, ".//div//div")[i].get_attribute("innerHTML")
+
             track.evaluations.append(eval)
             track.letters.append(letter)
+
+        print("Printing evaluations")
+        print(track.evaluations)
+        print(track.letters)
 
     def check_word_in_list_and_delete(self, track):
         if self.check_word_in_list():
             for i in range(0, 5):
                 time.sleep(2)
                 self.press_delete()
-
             utils.guessed_not.append(track.guessed.upper())
 
             track.guessed = "shore"
             return True
         else:
             return False
+
+    def close_wordle(self):
+        self.driver.quit()
