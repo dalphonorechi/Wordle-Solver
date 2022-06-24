@@ -10,4 +10,4 @@ Although still buggy, the success of solving wordle is way higher than expected 
 
 #### Cons
 
-The biggest downside with this wordle solver is that if the HTML elements of worlde is change the code has to be changed also to match that since we read data from these elements.
+The biggest downside with this wordle solver is that if the HTML elements of worlde is change, the code has to be changed to match that since we read data from these elements.
