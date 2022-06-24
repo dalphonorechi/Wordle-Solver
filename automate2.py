@@ -44,7 +44,6 @@ class Wordle:
             By.XPATH, ".//div//button[@data-key='←']"
         )[0]
         back.click()
-        
 
     def check_word_in_list(self):
         """Checks if selected word is not in the wordle 'list' and deletes it."""
@@ -91,8 +90,16 @@ class Wordle:
         time.sleep(2)
 
         for i in range(0, 5):
-            eval = game_board[track.tries].find_elements(By.XPATH, ".//div//div")[i].get_attribute("data-state")
-            letter = game_board[track.tries].find_elements(By.XPATH, ".//div//div")[i].get_attribute("innerHTML")
+            eval = (
+                game_board[track.tries]
+                .find_elements(By.XPATH, ".//div//div")[i]
+                .get_attribute("data-state")
+            )
+            letter = (
+                game_board[track.tries]
+                .find_elements(By.XPATH, ".//div//div")[i]
+                .get_attribute("innerHTML")
+            )
 
             track.evaluations.append(eval)
             track.letters.append(letter)

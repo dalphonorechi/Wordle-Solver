@@ -18,7 +18,6 @@ class Wordle:
         self.driver = webdriver.Chrome(executable_path=s, options=chrome_options)
         self.inner_components = None
 
-
     def open_wordle(self):
         self.driver.maximize_window()
         self.driver.get("https://www.nytimes.com/games/wordle/index.html")

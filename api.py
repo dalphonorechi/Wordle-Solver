@@ -18,9 +18,9 @@ class Api:
             t = 0
             return words
 
-        words =  getw()
+        words = getw()
 
-        print(pattern,pattern_not,correct)
+        print(pattern, pattern_not, correct)
 
         while len(words) == 0:
             words = getw()
@@ -57,7 +57,6 @@ class Api:
                 y.append("not same position")
 
         return y.count("same position and present") > 0
-        
 
     def get_patterns(self, track):
         pattern = ""
