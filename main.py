@@ -50,6 +50,7 @@ while track.end_of_tries() or not track.all_evaluations_correct():
     print(track.correct_list)
     print(track.present)
     print(track.absent)
+    
 
 if not track.all_evaluations_correct():
     wordle.close_wordle()

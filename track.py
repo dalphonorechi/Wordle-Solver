@@ -75,6 +75,7 @@ class Track:
 
     def end_of_tries(self):
         return self.tries < 6
+        
 
     def reset_letters(self):
         self.letters = []
