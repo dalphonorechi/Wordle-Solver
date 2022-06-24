@@ -44,6 +44,7 @@ class Wordle:
             By.XPATH, ".//div//button[@data-key='←']"
         )[0]
         back.click()
+        
 
     def check_word_in_list(self):
         """Checks if selected word is not in the wordle 'list' and deletes it."""

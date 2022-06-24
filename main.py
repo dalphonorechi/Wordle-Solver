@@ -44,7 +44,7 @@ while track.end_of_tries() or not track.all_evaluations_correct():
     track.reset_evaluation()
 
     track.update_tries()
-    
+
     print("Printing correct list")
     print(track.correct)
     print(track.correct_list)
