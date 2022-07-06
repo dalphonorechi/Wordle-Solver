@@ -12,6 +12,6 @@ Although still buggy, the success of solving wordle is way higher than expected 
 
 The biggest downside with this wordle solver is that if the HTML elements of wordle changes, the code has to be changed to match that since we read data from these elements.
 
-to run the solver
+To run the solver
 
 ### `python main.py`
