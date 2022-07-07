@@ -14,7 +14,7 @@ class Wordle:
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option("detach", True)
-        s = "C:\\Users\\Hp Pavilion\\Downloads\\Compressed\\chromedriver_win32_2\\chromedriver.exe"
+        s = "chrome_driver\\chromedriver.exe"
         self.driver = webdriver.Chrome(executable_path=s, options=chrome_options)
         self.inner_components = None
 
